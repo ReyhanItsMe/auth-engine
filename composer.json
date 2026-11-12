@@ -1,0 +1,57 @@
+{
+    "name": "reyhanitsme/auth-engine",
+    "description": "Plug-and-play, framework-agnostic PHP authentication engine (Native PHP & Laravel): credentials, magic links, OTP/TOTP, passkeys, OAuth and a modern UI scaffolder.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["auth", "authentication", "php", "laravel", "magic-link", "totp", "2fa", "webauthn", "passkeys", "oauth"],
+    "authors": [
+        { "name": "reyhanitsme" }
+    ],
+    "require": {
+        "php": "^8.2",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "ext-openssl": "*",
+        "ext-pdo": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.0"
+    },
+    "suggest": {
+        "ext-curl": "Faster HTTP client for OAuth (falls back to PHP streams).",
+        "ext-zip": "Only needed to run scripts/release.php.",
+        "ext-sodium": "Recommended for Argon2id hashing and signed tokens.",
+        "illuminate/support": "Required only when the package is used inside Laravel (^10.0|^11.0|^12.0)."
+    },
+    "autoload": {
+        "psr-4": {
+            "ReyhanItsMe\\AuthEngine\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ReyhanItsMe\\AuthEngine\\Tests\\": "tests/"
+        }
+    },
+    "bin": ["bin/easy-auth"],
+    "scripts": {
+        "test": "phpunit",
+        "release": "@php scripts/release.php",
+        "lint": "find src tests config bin scripts stubs/vanilla -type f \\( -name '*.php' -o -name 'easy-auth' \\) -print0 | xargs -0 -n1 php -l"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "ReyhanItsMe\\AuthEngine\\Adapters\\Laravel\\AuthEngineServiceProvider"
+            ],
+            "aliases": {
+                "AuthEngine": "ReyhanItsMe\\AuthEngine\\Auth"
+            }
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

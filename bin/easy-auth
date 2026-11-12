@@ -1,0 +1,27 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+use ReyhanItsMe\AuthEngine\Console\Application;
+
+$autoloaders = [
+    __DIR__ . '/../vendor/autoload.php',      // package checked out on its own
+    __DIR__ . '/../../../autoload.php',       // installed in vendor/reyhanitsme/auth-engine
+];
+
+foreach ($autoloaders as $autoloader) {
+    if (is_file($autoloader)) {
+        require $autoloader;
+        break;
+    }
+}
+
+if (!class_exists(Application::class)) {
+    fwrite(STDERR, "Composer autoloader not found. Run `composer install` first.\n");
+    exit(1);
+}
+
+$colors = function_exists('stream_isatty') ? stream_isatty(STDOUT) : false;
+
+exit((new Application(STDOUT, $colors, STDIN))->run($argv));
